@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - LLM_BACKEND=${LLM_BACKEND:-ollama}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      - LMSTUDIO_BASE_URL=${LMSTUDIO_BASE_URL:-http://host.docker.internal:1234/v1}
+      - GPT4ALL_BASE_URL=${GPT4ALL_BASE_URL:-http://host.docker.internal:4891/v1}
+      - DEFAULT_MODEL=${DEFAULT_MODEL:-qwen2.5:3b}
+      - EMBEDDING_BACKEND=${EMBEDDING_BACKEND:-ollama}
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-nomic-embed-text}
+      - LOCAL_EMBEDDING_MODEL=${LOCAL_EMBEDDING_MODEL:-all-MiniLM-L6-v2}
+      - FINETUNE_BACKEND=${FINETUNE_BACKEND:-auto}
+      - HF_BASE_MODEL=${HF_BASE_MODEL:-Qwen/Qwen2.5-3B-Instruct}
+      - CHROMA_PATH=/app/data/chromadb
+      - UPLOAD_PATH=/app/data/uploads
+      - FINETUNED_PATH=/app/data/finetuned
+      - CHUNK_SIZE=${CHUNK_SIZE:-512}
+      - CHUNK_OVERLAP=${CHUNK_OVERLAP:-64}
+      - TOP_K=${TOP_K:-5}
+      - TESSERACT_CMD=/usr/bin/tesseract
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  data:
