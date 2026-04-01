@@ -1,0 +1,17 @@
+{
+  "id": "failure_2_1775061552.087093",
+  "timestamp": "2026-04-01T22:09:12.087098",
+  "code": "with open(file_path) as f:\n    data = json.load(f)",
+  "error_signal": "File not found on second run",
+  "believed": "relative path persists across calls",
+  "reality": "CWD changes, relative paths become invalid",
+  "specific_assumption": "I believed relative file paths remain valid across function boundaries",
+  "why_belief_felt_right": "Paths seemed absolute in my code",
+  "error_class": 3,
+  "error_type": 14,
+  "project_context": "Scrapling - Data",
+  "concept_candidate": null,
+  "confidence": 0.8,
+  "evidence": [],
+  "reference_project": null
+}

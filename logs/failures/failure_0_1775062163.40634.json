@@ -1,0 +1,17 @@
+{
+  "id": "failure_0_1775062163.40634",
+  "timestamp": "2026-04-01T22:19:23.406375",
+  "code": "\ndata = '{\"name\":\"John\", invalid}'\nparsed = json.loads(data)\n",
+  "error_signal": "JSONDecodeError on invalid JSON",
+  "believed": "JSON parser accepts trailing commas",
+  "reality": "JSON parser rejects trailing commas",
+  "specific_assumption": "I believed JSON syntax allows a trailing comma before closing brace",
+  "why_belief_felt_right": "Python dicts allow trailing commas",
+  "error_class": 2,
+  "error_type": 14,
+  "project_context": "Feature Dev",
+  "concept_candidate": null,
+  "confidence": 0.85,
+  "evidence": [],
+  "reference_project": null
+}

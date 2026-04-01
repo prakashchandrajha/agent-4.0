@@ -1,0 +1,17 @@
+{
+  "id": "failure_1_1775061769.904065",
+  "timestamp": "2026-04-01T22:12:49.904088",
+  "code": "try:\n    x = open('nonexistent.txt')\nexcept Exception as e:\n    print(f'Error: {str(e)}')",
+  "error_signal": "Stack trace discarded",
+  "believed": "str(exception) yields full traceback",
+  "reality": "str(exception) returns only message text",
+  "specific_assumption": "I believed str(e) on exceptions returns the call stack",
+  "why_belief_felt_right": "Exception objects have traceback attributes",
+  "error_class": 2,
+  "error_type": 2,
+  "project_context": "Error Handling",
+  "concept_candidate": null,
+  "confidence": 0.9,
+  "evidence": [],
+  "reference_project": null
+}

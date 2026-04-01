@@ -1,0 +1,17 @@
+{
+  "id": "failure_1_1775061552.086804",
+  "timestamp": "2026-04-01T22:09:12.086810",
+  "code": "config = AppConfig()\nmodel = LLMClient(config)",
+  "error_signal": "Config not initialized",
+  "believed": "AppConfig() creates singleton",
+  "reality": "Creates new instance every call",
+  "specific_assumption": "I believed AppConfig() uses singleton pattern",
+  "why_belief_felt_right": "Config is rarely duplicated in production",
+  "error_class": 1,
+  "error_type": 3,
+  "project_context": "LocalMind - Initialization",
+  "concept_candidate": null,
+  "confidence": 0.85,
+  "evidence": [],
+  "reference_project": null
+}

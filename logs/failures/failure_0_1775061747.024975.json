@@ -1,0 +1,17 @@
+{
+  "id": "failure_0_1775061747.024975",
+  "timestamp": "2026-04-01T22:12:27.024988",
+  "code": "import json\ndata = '{\"name\": \"test\"}'\n# Belief: split() preserves JSON structure\nparts = data.split('\"')\nprint(parts)",
+  "error_signal": "Does not parse JSON, breaks structure",
+  "believed": "split() extracts JSON meaningfully",
+  "reality": "split() destroys JSON structure, just lists strings",
+  "specific_assumption": "I believed split() parsing JSON would preserve key-value relationships",
+  "why_belief_felt_right": "Running it produces \"output\" without immediate error",
+  "error_class": 2,
+  "error_type": 1,
+  "project_context": "Data Processing",
+  "concept_candidate": null,
+  "confidence": 0.85,
+  "evidence": [],
+  "reference_project": null
+}

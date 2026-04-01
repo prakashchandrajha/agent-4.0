@@ -1,0 +1,17 @@
+{
+  "id": "failure_0_1775061769.876693",
+  "timestamp": "2026-04-01T22:12:49.876718",
+  "code": "import json\ndata = '{\"name\": \"test\"}'\nparts = data.split('\"')\nprint(parts)",
+  "error_signal": "Breaks JSON structure",
+  "believed": "split() extracts JSON fields",
+  "reality": "split() destroys structure",
+  "specific_assumption": "I believed split(quote) on JSON returns key-value pairs",
+  "why_belief_felt_right": "Quotes delimit JSON fields",
+  "error_class": 2,
+  "error_type": 1,
+  "project_context": "Data Processing",
+  "concept_candidate": null,
+  "confidence": 0.85,
+  "evidence": [],
+  "reference_project": null
+}

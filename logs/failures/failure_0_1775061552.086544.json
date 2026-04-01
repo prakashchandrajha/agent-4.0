@@ -1,0 +1,17 @@
+{
+  "id": "failure_0_1775061552.086544",
+  "timestamp": "2026-04-01T22:09:12.086561",
+  "code": "try:\n    run_inference()\nexcept Exception as e:\n    logger.error(str(e))",
+  "error_signal": "Stack trace context lost",
+  "believed": "str(exception) preserves call stack",
+  "reality": "Only message string preserved, no traceback",
+  "specific_assumption": "I believed exception objects stringify to full traceback",
+  "why_belief_felt_right": "Exceptions have __traceback__ attribute",
+  "error_class": 2,
+  "error_type": 2,
+  "project_context": "LocalMind - Feature",
+  "concept_candidate": null,
+  "confidence": 0.9,
+  "evidence": [],
+  "reference_project": null
+}
