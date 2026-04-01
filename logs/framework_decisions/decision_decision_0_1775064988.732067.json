@@ -1,0 +1,16 @@
+{
+  "id": "decision_0_1775064988.732067",
+  "framework": "fastapi",
+  "language": "python",
+  "pattern_type": "async_handling",
+  "decision": "Use async def for endpoint handlers",
+  "rationale": "Allows concurrent request handling without blocking",
+  "code_snippet": "@app.get('/data')\nasync def handler(): ...",
+  "affected_components": [
+    "api_layer",
+    "database_layer"
+  ],
+  "error_history": [],
+  "confidence": 0.7,
+  "timestamp": "2026-04-01T23:06:28.732074"
+}

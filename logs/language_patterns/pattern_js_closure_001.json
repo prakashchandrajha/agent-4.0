@@ -1,0 +1,13 @@
+{
+  "id": "js_closure_001",
+  "language": "javascript",
+  "framework": "react",
+  "feature": "closure",
+  "description": "Functions in JavaScript capture variables from outer scope. Closures persist state.",
+  "code_example": "function makeCounter() {\n    let count = 0;\n    return () => count++;\n}",
+  "common_error": "reference_error",
+  "best_practice": "Understand what scope each function closes over. Beware of loops creating closures.",
+  "confidence": 0.95,
+  "timestamp": "2026-04-01T23:06:28.731796",
+  "reference_project": "LocalMind"
+}

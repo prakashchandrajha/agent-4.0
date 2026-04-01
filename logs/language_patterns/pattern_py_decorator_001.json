@@ -1,0 +1,13 @@
+{
+  "id": "py_decorator_001",
+  "language": "python",
+  "framework": "fastapi",
+  "feature": "decorator",
+  "description": "Decorators in Python transform function behavior. @app.get() in FastAPI wraps function.",
+  "code_example": "@app.get('/path')\ndef handler(): pass",
+  "common_error": "attribute_error",
+  "best_practice": "Check what decorator does. It may not be transparent.",
+  "confidence": 0.95,
+  "timestamp": "2026-04-01T23:06:28.731528",
+  "reference_project": "LocalMind"
+}

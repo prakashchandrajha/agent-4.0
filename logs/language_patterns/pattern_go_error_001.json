@@ -1,0 +1,13 @@
+{
+  "id": "go_error_001",
+  "language": "go",
+  "framework": null,
+  "feature": "error_return",
+  "description": "Go returns errors as values, not exceptions. MUST check if err != nil.",
+  "code_example": "result, err := doWork()\nif err != nil {\n    return err\n}",
+  "common_error": "nil_dereference",
+  "best_practice": "Check error immediately after any function that returns error. Never ignore.",
+  "confidence": 0.95,
+  "timestamp": "2026-04-01T23:06:28.731931",
+  "reference_project": "Pinchtab"
+}

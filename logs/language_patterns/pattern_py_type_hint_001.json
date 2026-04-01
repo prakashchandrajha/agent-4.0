@@ -1,0 +1,13 @@
+{
+  "id": "py_type_hint_001",
+  "language": "python",
+  "framework": null,
+  "feature": "type_hint",
+  "description": "Type hints in Python are DOCUMENTATION. They don't enforce types at runtime.",
+  "code_example": "def process(data: dict) -> str:\n    return str(data)",
+  "common_error": "type_error",
+  "best_practice": "Type hints help IDEs but don't prevent bad types. Add runtime validation if needed.",
+  "confidence": 0.95,
+  "timestamp": "2026-04-01T23:06:28.731731",
+  "reference_project": "autoresearch"
+}

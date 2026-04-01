@@ -1,0 +1,13 @@
+{
+  "id": "py_async_001",
+  "language": "python",
+  "framework": "fastapi",
+  "feature": "async_await",
+  "description": "async def requires await. Can't call async function from sync code.",
+  "code_example": "async def fetch():\n    result = await async_call()\n    return result",
+  "common_error": "async_error",
+  "best_practice": "async/await must be all the way up the call stack, or use asyncio.run()",
+  "confidence": 0.95,
+  "timestamp": "2026-04-01T23:06:28.731652",
+  "reference_project": "LocalMind"
+}

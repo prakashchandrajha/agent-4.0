@@ -1,0 +1,13 @@
+{
+  "id": "js_this_001",
+  "language": "javascript",
+  "framework": "react",
+  "feature": "this_binding",
+  "description": "'this' in JavaScript is DYNAMIC. Use arrow functions to capture lexical 'this'.",
+  "code_example": "class Handler {\n    handle = () => this.data;  // Arrow function captures 'this'\n}",
+  "common_error": "this_undefined",
+  "best_practice": "Use arrow functions for callbacks. Or bind: this.method.bind(this)",
+  "confidence": 0.95,
+  "timestamp": "2026-04-01T23:06:28.731844",
+  "reference_project": "LocalMind"
+}

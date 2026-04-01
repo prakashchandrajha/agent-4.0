@@ -1,0 +1,13 @@
+{
+  "id": "js_promise_001",
+  "language": "javascript",
+  "framework": null,
+  "feature": "promise",
+  "description": "fetch() does NOT reject on HTTP error. Must check response.ok.",
+  "code_example": "const resp = await fetch(url);\nif (!resp.ok) throw new Error(resp.status);",
+  "common_error": "promise_rejection",
+  "best_practice": "ALWAYS check response.ok after fetch(). Only network errors trigger rejection.",
+  "confidence": 0.95,
+  "timestamp": "2026-04-01T23:06:28.731889",
+  "reference_project": "LocalMind"
+}
