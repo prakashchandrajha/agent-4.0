@@ -112,20 +112,21 @@ class WorkingMemory:
     assuming: list[str] = field(default_factory=list)
     
     def add_confirmed(self, fact: str):
-        """Mark something as verified"""
-        self.confirmed.append(fact)
+        """Mark something as verified (with deduplication)"""
+        if fact not in self.confirmed:  # CRITICAL FIX: prevent duplicates
+            self.confirmed.append(fact)
         if fact in self.uncertain:
             self.uncertain.remove(fact)
         if fact in self.assuming:
             self.assuming.remove(fact)
     
     def add_uncertain(self, question: str):
-        """Mark something as unknown"""
+        """Mark something as unknown (with deduplication)"""
         if question not in self.uncertain:
             self.uncertain.append(question)
     
     def add_assumption(self, assumption: str):
-        """Mark something being taken as true without verification"""
+        """Mark something being taken as true without verification (with deduplication)"""
         if assumption not in self.assuming:
             self.assuming.append(assumption)
 
@@ -376,6 +377,25 @@ class FunctionModel:
     
     def approve_for_implementation(self):
         """Approve model for code implementation"""
+        
+        # CRITICAL FIX: Call enhanced validation before approval (only if code_length known)
+        # This catches silent continuation, error probability, working memory health issues
+        if self.code_length and self.code_length > 0:
+            is_valid, issues = self.validate_enhanced(self.code_length)
+            
+            if not is_valid:
+                # Find error-level issues that block approval
+                errors = [i for i in issues if i.get('level') == 'error']
+                if errors:
+                    error_messages = [i['message'] for i in errors]
+                    raise ValueError(f"Model validation failed before approval:\n" + "\n".join(error_messages))
+                
+                # Warn about warnings but allow approval
+                warnings = [i for i in issues if i.get('level') in ['warning', 'critical_warning']]
+                if warnings:
+                    for w in warnings:
+                        print(f"⚠️ {w['message']}")
+        
         self.status = "approved"
         self.approval_timestamp = datetime.now()
     
@@ -425,6 +445,22 @@ class ModelStore:
         self.models: dict[str, FunctionModel] = {}
         self.models_dir = Path("./logs/models")
         self.models_dir.mkdir(parents=True, exist_ok=True)
+        
+        # CRITICAL FIX: Load failures from Phase 0 so agent can learn from history
+        # Without this, agent records failures but never learns from them
+        try:
+            from phase_0_recorder import get_failure_recorder
+            recorder = get_failure_recorder()
+            # Load all previous failures from disk into memory
+            if hasattr(recorder, 'load_from_disk'):
+                recorder.load_from_disk()
+                # Track loaded failures for stats
+                num_failures = len(recorder.failures) if hasattr(recorder, 'failures') else 0
+                if num_failures > 0:
+                    print(f"✓ Loaded {num_failures} previous failures for learning")
+        except (ImportError, FileNotFoundError, Exception) as e:
+            # It's okay if Phase 0 isn't available yet
+            pass
     
     @classmethod
     def get_instance(cls) -> "ModelStore":

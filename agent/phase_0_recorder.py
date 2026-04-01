@@ -91,6 +91,20 @@ class FailureRecorder:
             }
         """
         
+        # CRITICAL: Validate error_class and error_type ranges FIRST
+        error_class = config.get('error_class', 0)
+        error_type = config.get('error_type', 0)
+        
+        if not isinstance(error_class, int) or not (1 <= error_class <= 4):
+            raise ValueError(
+                f"REJECTED: Invalid error_class {error_class}, must be 1-4 (REQUIREMENT/LOGICAL/DESIGN/EXECUTION)"
+            )
+        
+        if not isinstance(error_type, int) or not (1 <= error_type <= 15):
+            raise ValueError(
+                f"REJECTED: Invalid error_type {error_type}, must be 1-15 (see ErrorType enum)"
+            )
+        
         # VALIDATION: Assumption must be specific
         assumption = config.get('specific_assumption', '')
         if not assumption or len(assumption) < 20:
@@ -109,6 +123,14 @@ class FailureRecorder:
                 f"Must name specific false belief, not symptom"
             )
         
+        # CRITICAL FIX: Validate evidence is non-empty
+        evidence = config.get('evidence', [])
+        if not evidence or len(evidence) == 0:
+            raise ValueError(
+                f"REJECTED: No evidence provided. Must explain WHY this belief failed.\n"
+                f"Evidence items required (minimum 1)"
+            )
+        
         # Create failure record
         failure = Failure(
             id=f"failure_{self.failure_count}_{datetime.now().timestamp()}",
@@ -119,8 +141,8 @@ class FailureRecorder:
             reality=config.get('reality', ''),
             specific_assumption=assumption,
             why_belief_felt_right=config.get('why_belief_felt_right', ''),
-            error_class=config.get('error_class', 0),
-            error_type=config.get('error_type', 0),
+            error_class=error_class,
+            error_type=error_type,
             project_context=config.get('project_context', ''),
             concept_candidate=config.get('concept_candidate'),
             confidence=config.get('confidence', 0.5),

@@ -1,0 +1,21 @@
+{
+  "id": "belief_1_1775063404.673516",
+  "timestamp": "2026-04-01T22:40:04.673522",
+  "old_belief": "Async callback fires immediately after setup",
+  "reality": "Callback fires only when condition met",
+  "specific_assumption": "I believed .on('data') callback fires in synchronous order",
+  "why_belief_seemed_right": "Function called immediately, seemed like it would fire right away",
+  "error_class": "LOGICAL",
+  "error_type": "CONCURRENCY",
+  "concept_anchor": "ASYNC_ORDERING",
+  "evidence_count": 1,
+  "confidence": 0.5,
+  "decay_rate": "slow",
+  "scope_of_error": [],
+  "causal_chain": null,
+  "recovery_actions": [],
+  "new_belief": "",
+  "new_confidence": 0.3,
+  "dependent_decisions": [],
+  "tested_in_sandbox": false
+}

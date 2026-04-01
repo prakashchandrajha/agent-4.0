@@ -1,0 +1,25 @@
+{
+  "function_name": "validate_json_schema",
+  "timestamp": "2026-04-01T22:39:58.981178",
+  "locked": false,
+  "problem": "Accept JSON strings and validate against JSON schema, raising errors on invalid input",
+  "mechanism": "Read input string, apply JSON.parse() to get object, load schema from config, use Ajv library to validate object against schema, return validated object or raise ValueError with schema violation details",
+  "invariant": "Every parsed and returned object strictly matches schema. Invalid input always raises error.",
+  "constraint": "Must validate 50MB files without memory explosion. Must reject invalid in <100ms.",
+  "failure_modes": [
+    "If JSON.parse fails \u2192 SyntaxError not caught \u2192 crash",
+    "If schema loader fails \u2192 Ajv init fails \u2192 reject all inputs",
+    "If validation incomplete \u2192 invalid data passes through \u2192 downstream errors"
+  ],
+  "boring_solution": "Just use native JSON.parse with try/catch. No schema validation.",
+  "why_boring_rejected": "Doesn't catch invalid structures. User gets wrong data.",
+  "cost": {
+    "write_hours": 3.0,
+    "test_hours": 2.0,
+    "debug_hours": 1.5,
+    "change_hours": 1.0
+  },
+  "confidence": 0.85,
+  "confidence_decay": "slow",
+  "status": "approved"
+}

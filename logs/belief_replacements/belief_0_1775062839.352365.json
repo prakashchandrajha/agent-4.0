@@ -1,0 +1,21 @@
+{
+  "id": "belief_0_1775062839.352365",
+  "timestamp": "2026-04-01T22:30:39.352386",
+  "old_belief": "JSON.parse() always succeeds on valid input",
+  "reality": "JSON.parse() throws SyntaxError on invalid JSON",
+  "specific_assumption": "I believed JSON.parse() only fails on non-string input",
+  "why_belief_seemed_right": "JSON is simple format, should always parse something",
+  "error_class": "LOGICAL",
+  "error_type": "LOGICAL",
+  "concept_anchor": "JSON_VALIDATION",
+  "evidence_count": 1,
+  "confidence": 0.5,
+  "decay_rate": "slow",
+  "scope_of_error": [],
+  "causal_chain": null,
+  "recovery_actions": [],
+  "new_belief": "",
+  "new_confidence": 0.3,
+  "dependent_decisions": [],
+  "tested_in_sandbox": false
+}

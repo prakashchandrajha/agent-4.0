@@ -44,6 +44,7 @@ class ExecutionSignal:
     exception: Optional[str] = None
     exception_traceback: Optional[str] = None
     return_value: Any = None
+    return_code: int = -1  # Process exit code (-1 = crashed before running)
     execution_time_ms: float = 0.0
     memory_delta_mb: float = 0.0
     success: bool = False
@@ -112,6 +113,15 @@ class Executor:
         env_vars: Optional[Dict[str, str]] = None,
     ) -> ExecutionResult:
         """Execute Python code and capture all signals"""
+        
+        # CRITICAL FIX: Validate code input to prevent dangerous operations
+        if len(code) > 50000:
+            raise ValueError(f"❌ Code too large ({len(code)} chars > 50000 limit). Split into smaller functions.")
+        
+        dangerous_imports = ['__import__', 'eval', 'exec', 'subprocess', 'os.system']
+        for dangerous in dangerous_imports:
+            if dangerous in code:
+                raise ValueError(f"❌ Dangerous function '{dangerous}' not allowed in isolated execution")
         
         result = ExecutionResult(
             id=f"exec_{self._execution_count}_{datetime.now().timestamp()}",
@@ -186,11 +196,12 @@ class Executor:
             else:
                 result.confidence = 0.5  # Lower confidence if failed
             
-            # Clean up temp script
+            # Clean up temp script (with logging for disk issues)
             try:
                 script_path.unlink()
-            except:
-                pass
+            except Exception as e:
+                # CRITICAL FIX: Log cleanup failures to prevent silent disk space exhaustion
+                print(f"⚠️ Failed to clean temp file {script_path}: {e}")
         
         self._execution_history.append(result)
         return result
@@ -202,6 +213,15 @@ class Executor:
         env_vars: Optional[Dict[str, str]] = None,
     ) -> ExecutionResult:
         """Execute JavaScript code and capture signals"""
+        
+        # CRITICAL FIX: Validate code input to prevent dangerous operations
+        if len(code) > 50000:
+            raise ValueError(f"❌ Code too large ({len(code)} chars > 50000 limit). Split into smaller functions.")
+        
+        dangerous_patterns = ['eval(', 'exec(', 'require(\'fs\')', 'require("fs")', 'process.exit']
+        for dangerous in dangerous_patterns:
+            if dangerous in code:
+                raise ValueError(f"❌ Dangerous pattern '{dangerous}' not allowed in isolated execution")
         
         result = ExecutionResult(
             id=f"exec_{self._execution_count}_{datetime.now().timestamp()}",
@@ -260,8 +280,9 @@ class Executor:
             
             try:
                 script_path.unlink()
-            except:
-                pass
+            except Exception as e:
+                # CRITICAL FIX: Log cleanup failures to prevent silent disk space exhaustion
+                print(f"⚠️ Failed to clean temp file {script_path}: {e}")
         
         self._execution_history.append(result)
         return result
